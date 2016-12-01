@@ -5,11 +5,8 @@ require('./../vendor/semantic.min.css');
 @Component({
   selector: 'my-app',
   template: `
-    <h1>{{title}}</h1>
-    <div class="ui input"> 
-      <input type="date" #date>
-    </div>
-    <button class="ui button" (click)="getTicket(date.value)">Get tickets</button>
+    <h1>Tickets helper</h1>
+    <main-form></main-form>
     `
 })
 export class AppComponent {

@@ -1,0 +1,32 @@
+<div class="ui grid">
+    <div class="centered row">
+        <div class="ten wide column">
+            <form class="ui form" 
+            [formGroup]="mainForm"
+            (ngSubmit)="onSubmit(mainForm.value)">
+                <div class="two fields">
+                    <div class="field">
+                        <select clas="ui fluid dropdown" name="from" [formControl]="mainForm.controls['from']">
+                            <option *ngFor="let station of stations" value="{{station.id}}">{{station.title}}</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <!--<input type="text" name="to" placeholder="To" [formControl]="mainForm.controls['to']">-->
+                        <select clas="ui fluid dropdown" name="to" [formControl]="mainForm.controls['to']">
+                            <option *ngFor="let station of stations" value="{{station.id}}">{{station.title}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="two fields">
+                    <div class="field">
+                        <input type="date" name="when" placeholder="When" [formControl]="mainForm.controls['when']">
+                    </div>
+                    <div class="field">
+                        <input type="text" name="time" placeholder="Time" [formControl]="mainForm.controls['time']">
+                    </div>
+                </div>
+                <button class="ui button" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</div>

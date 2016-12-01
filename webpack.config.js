@@ -10,7 +10,7 @@ module.exports = {
         path: './dist'
     },
     resolve: {
-        extensions: ['', '.ts', '.js']
+        extensions: ['', '.ts', '.js', '.html']
     },
     module: {
         loaders: [
@@ -20,7 +20,7 @@ module.exports = {
             },
             {
                 test: /\.html$/,
-                loader: 'html'
+                loader: 'raw'
             },
             {
                 test: /\.css$/,
