@@ -16,6 +16,8 @@ app.use(function (req, res, next) {
 
 app.get('/', function (req, res) {
   var date = req.query['date'];
+  var sessId = req.query['sessId'];
+  var gvToken = req.query['gvToken'];
   var headers = {
     'Accept': '*/*',
     'Accept-Encoding': 'gzip, deflate',
@@ -23,12 +25,12 @@ app.get('/', function (req, res) {
     //'Content-Length': 263,
     'Origin': 'http://booking.uz.gov.ua',
     'Content-Type': 'application/x-www-form-urlencoded',
-    'Cookie': '_gv_lang=uk; _gv_sessid=ndhl4ispun7quqj0ogd7rmv381; HTTPSERVERID=server1; __utma=31515437.1867219519.1471021841.1480359405.1480361575.3; __utmb=31515437.1.10.1480361575; __utmc=31515437; __utmz=31515437.1480361575.3.3.utmcsr=uz.gov.ua|utmccn=(referral)|utmcmd=referral|utmcct=/',
+    'Cookie': '_gv_lang=uk; _gv_sessid='+sessId+'; HTTPSERVERID=server1; __utma=31515437.1867219519.1471021841.1480359405.1480361575.3; __utmb=31515437.1.10.1480361575; __utmc=31515437; __utmz=31515437.1480361575.3.3.utmcsr=uz.gov.ua|utmccn=(referral)|utmcmd=referral|utmcct=/',
     'Content-Type': 'application/x-www-form-urlencoded',
     'GV-Ajax': '1',
     'GV-Referer': 'http://booking.uz.gov.ua/',
     'GV-Screen': '1680x1050',
-    'GV-Token': '2dcf97c54c03dacda804e0a85829ee4e',
+    'GV-Token': gvToken,
     'Host': 'booking.uz.gov.ua',
     'Referer': 'http://booking.uz.gov.ua/',
     'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36',
@@ -54,7 +56,7 @@ app.get('/', function (req, res) {
   // Start the request
   request(options, function (error, response, body) {
     //console.log(error);
-    console.log(response.request.body);
+    //console.log(response.request.body);
     //console.log(body);
     if (!error && response.statusCode == 200) {
       // Print out the response body

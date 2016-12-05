@@ -1,26 +1,20 @@
 import { Component } from '@angular/core';
-import {Http, Response} from '@angular/http';
-import * as moment from 'moment';
 require('./../vendor/semantic.min.css');
+import {RequestParameters} from './Models/RequestParameters';
+import {TicketsService} from './TicketsService';
 @Component({
   selector: 'my-app',
   template: `
     <h1>Tickets helper</h1>
-    <main-form></main-form>
+    <main-form (submitCall)="getTicket($event)"></main-form>
     `
 })
 export class AppComponent {
-  public date;
-  title = 'Tour of Heroes';
-  myHero = 'Windstorm';
-  constructor(public http: Http) {
+  constructor(public ticketsService: TicketsService) {
       
   }
-  getTicket(date:string):void {
-    let formatedDate = moment(date).format('DD.MM.YYYY');
-    this.http.request('http://localhost:3000/?date='+formatedDate)
-      .subscribe((res: Response) => {
-          console.log(res);
-      })
+  getTicket(params: RequestParameters):void {
+    this.ticketsService.getTicket(params)
+    .subscribe((responce) => console.log(responce.json()));
   }
 }
