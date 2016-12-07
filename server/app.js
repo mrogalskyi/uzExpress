@@ -1,6 +1,9 @@
 var express = require('express')
 var request = require('request');
 var app = express()
+
+app.use(express.static('dist'));
+
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', req.get('Origin') || '*');
   res.header('Access-Control-Allow-Credentials', 'true');
@@ -14,7 +17,7 @@ app.use(function (req, res, next) {
   }
 });
 
-app.get('/', function (req, res) {
+app.get('/tickets', function (req, res) {
   var date = req.query['date'];
   var sessId = req.query['sessId'];
   var gvToken = req.query['gvToken'];

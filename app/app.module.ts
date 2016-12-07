@@ -7,10 +7,11 @@ import {TicketsService} from './TicketsService';
 
 import { AppComponent }   from './app.component';
 import { MainFromComponent } from './MainForm/MainForm.component'
+import {TrainComponent} from './Train/Train.component';
 
 @NgModule({
   imports:      [ BrowserModule, HttpModule, ReactiveFormsModule, FormsModule ],
-  declarations: [ AppComponent, MainFromComponent ],
+  declarations: [ AppComponent, MainFromComponent, TrainComponent ],
   providers:    [ TicketsService ],
   bootstrap:    [ AppComponent ]
 })

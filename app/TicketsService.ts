@@ -13,6 +13,6 @@ export class TicketsService {
 
         let formatedDate = moment(params.departureDate).format('DD.MM.YYYY');
 
-        return this.http.request(`http://localhost:3000/?date=${formatedDate}&sessId=${params.sessId}&gvToken=${params.gvToken}`)
+        return this.http.request(`http://localhost:3000/tickets?date=${formatedDate}&sessId=${params.sessId}&gvToken=${params.gvToken}`)
     }
 }

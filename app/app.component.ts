@@ -7,14 +7,21 @@ import {TicketsService} from './TicketsService';
   template: `
     <h1>Tickets helper</h1>
     <main-form (submitCall)="getTicket($event)"></main-form>
+    <train *ngFor="let train of trains" [train]="train"></train>
     `
 })
 export class AppComponent {
+  trains: any[];
   constructor(public ticketsService: TicketsService) {
       
   }
   getTicket(params: RequestParameters):void {
+    this.trains = [];
     this.ticketsService.getTicket(params)
-    .subscribe((responce) => console.log(responce.json()));
+    .subscribe((responce) => {
+      this.trains = responce.json().value;
+      console.log(responce.json());
+      console.log(this.trains);
+    });
   }
 }
