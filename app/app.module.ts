@@ -3,7 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {TicketsService} from './TicketsService';
+import {TicketsService} from './Services/TicketsService';
+import {StationService} from './Services/StationService';
 
 
 import { AppComponent }   from './app.component';
@@ -25,7 +26,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes, { useHash: true })
      ],
   declarations: [ AppComponent, MainFromComponent, TrainComponent, SearchComponent ],
-  providers:    [ TicketsService ],
+  providers:    [ TicketsService, StationService ],
   bootstrap:    [ AppComponent ]
 })
 export class AppModule { }

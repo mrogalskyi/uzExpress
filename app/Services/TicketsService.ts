@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { RequestParameters } from './Models/RequestParameters';
+import { RequestParameters } from '../Models/RequestParameters';
 import { Http, Response } from '@angular/http';
 import * as moment from 'moment';
 

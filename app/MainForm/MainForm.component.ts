@@ -1,11 +1,13 @@
-import {Component, Output, EventEmitter, OnInit} from '@angular/core';
- import {
- FormBuilder,
- FormGroup
+import { Component, Output, EventEmitter, OnInit } from '@angular/core';
+import {
+    FormBuilder,
+    FormGroup
 } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
-import {RequestParameters} from './../Models/RequestParameters';
+import { RequestParameters } from './../Models/RequestParameters';
+import { StationService } from '../Services/StationService';
+import {Station} from '../Models/Station';
 
 
 @Component({
@@ -15,7 +17,7 @@ import {RequestParameters} from './../Models/RequestParameters';
 export class MainFromComponent implements OnInit {
     @Output() submitCall = new EventEmitter<RequestParameters>();
     mainForm: FormGroup
-    stations: any[] = [{id:1, title:'Київ'},{id:2, title:'Кривин'}];
+    stations: Station[];
 
     ngOnInit() {
         this.route.queryParams.subscribe((params: Params) => {
@@ -31,21 +33,23 @@ export class MainFromComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
+        private stationService: StationService,
         fb: FormBuilder
-        ) {
-         this.mainForm = fb.group({
+    ) {
+        this.stationService.getStations().subscribe( stations => this.stations = stations)
+        this.mainForm = fb.group({
             from: [''],
             to: [''],
             when: [''],
             time: [''],
-            sessid:[''],
-            gvToken:['']
+            sessid: [''],
+            gvToken: ['']
         });
     }
 
-    onSubmit(values:any) {
+    onSubmit(values: any) {
         var params = new RequestParameters(values);
-        this.router.navigate(['/search'], {queryParams: params})
+        this.router.navigate(['/search'], { queryParams: params })
         this.submitCall.next(params);
         return false;
     }

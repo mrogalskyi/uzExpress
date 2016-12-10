@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-require('../../vendor/semantic.min.css');
 import {RequestParameters} from '../Models/RequestParameters';
-import {TicketsService} from '../TicketsService';
+import {TicketsService} from '../Services/TicketsService';
 @Component({
   selector: 'search',
   template: `
