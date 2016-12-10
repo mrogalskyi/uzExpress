@@ -6,11 +6,11 @@ export class RequestParameters {
     sessId: string;
     gvToken: string;
     constructor(obj: any) {
-        this.fromStation = obj.from || '0';
-        this.toStation = obj.to || '0';
-        this.departureDate = obj.when || '0';
-        this.departureTime = obj.time || '0';
-        this.sessId = obj.sessid || '0';
-        this.gvToken = obj.gvToken || '0';
+        this.fromStation = obj.from || '';
+        this.toStation = obj.to || '';
+        this.departureDate = obj.when || '';
+        this.departureTime = obj.time || '';
+        this.sessId = obj.sessid || '';
+        this.gvToken = obj.gvToken || '';
     }
 }

@@ -32,6 +32,9 @@ module.exports = {
             },
         ]
     },
+    devServer: { 
+        inline: true 
+    },
     plugins: [
         new HtmlWebpackPlugin({
             template: './app/index.html'
