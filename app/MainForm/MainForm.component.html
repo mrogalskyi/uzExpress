@@ -11,7 +11,6 @@
                         </select>
                     </div>
                     <div class="field">
-                        <!--<input type="text" name="to" placeholder="To" [formControl]="mainForm.controls['to']">-->
                         <select clas="ui fluid dropdown" name="to" [formControl]="mainForm.controls['to']">
                             <option *ngFor="let station of stations" value="{{station.id}}">{{station.title}}</option>
                         </select>

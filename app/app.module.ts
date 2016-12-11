@@ -11,6 +11,7 @@ import { AppComponent }   from './app.component';
 import { MainFromComponent } from './MainForm/MainForm.component'
 import { SearchComponent } from './Search/Search.component'
 import {TrainComponent} from './Train/Train.component';
+import {TrainListComponent} from './TrainList/TrainList.component';
 
 const appRoutes: Routes = [
   {path:'', redirectTo: 'search',pathMatch:'full'},
@@ -25,7 +26,7 @@ const appRoutes: Routes = [
     FormsModule,
     RouterModule.forRoot(appRoutes, { useHash: true })
      ],
-  declarations: [ AppComponent, MainFromComponent, TrainComponent, SearchComponent ],
+  declarations: [ AppComponent, MainFromComponent, TrainComponent, SearchComponent, TrainListComponent ],
   providers:    [ TicketsService, StationService ],
   bootstrap:    [ AppComponent ]
 })

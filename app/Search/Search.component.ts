@@ -5,22 +5,21 @@ import {TicketsService} from '../Services/TicketsService';
   selector: 'search',
   template: `
     <h1>Tickets helper</h1>
-    <main-form (submitCall)="getTicket($event)"></main-form>
-    <train *ngFor="let train of trains" [train]="train"></train>
+    <main-form (submitCall)="search($event)"></main-form>
+    {{error}}
+    <train-list [trains]="trains"></train-list>
     `
 })
 export class SearchComponent {
   trains: any[];
+  error: string;
   constructor(public ticketsService: TicketsService) {
       
   }
-  getTicket(params: RequestParameters):void {
+  search(params: RequestParameters):void {
+    this.error = '';
     this.trains = [];
-    this.ticketsService.getTicket(params)
-    .subscribe((responce) => {
-      this.trains = responce.json().value;
-      console.log(responce.json());
-      console.log(this.trains);
-    });
+    this.ticketsService.getTrainsWithTickets(params)
+    .subscribe((trains) => this.trains = trains, (err) => this.error = err);
   }
 }
