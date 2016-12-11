@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { RequestParameters } from '../Models/RequestParameters';
 import { Http, Response } from '@angular/http';
 import * as moment from 'moment';
+
 import {Train} from '../Models/Train';
 
 @Injectable()
@@ -11,8 +12,7 @@ export class TicketsService {
 
     }
     getTrainsWithTickets(params: RequestParameters): Observable<Train[]> {
-        let formatedDate = moment(params.departureDate).format('DD.MM.YYYY');
-        let trains = this.http.request(`http://localhost:3000/tickets?date=${formatedDate}&sessId=${params.sessId}&gvToken=${params.gvToken}`)
+        let trains = this.http.post(`http://localhost:3000/tickets`, Object.assign({},params,{departureDate: moment(params.departureDate).format('DD.MM.YYYY')}))
             .map((res) => res.json())
             .map((res) => {
                 if(res.value && Array.isArray(res.value)) {

@@ -1,7 +1,9 @@
 var express = require('express')
 var request = require('request');
+var bodyParser = require('body-parser');
 var app = express()
 
+app.use( bodyParser.json() ); 
 app.use(express.static('dist'));
 
 app.use(function (req, res, next) {
@@ -11,16 +13,18 @@ app.use(function (req, res, next) {
   res.header('Access-Control-Expose-Headers', 'Content-Length');
   res.header('Access-Control-Allow-Headers', 'Accept, Authorization, Content-Type, X-Requested-With, Range');
   if (req.method === 'OPTIONS') {
-    return res.send(200);
+    return res.sendStatus(200);
   } else {
     return next();
   }
 });
 
-app.get('/tickets', function (req, res) {
-  var date = req.query['date'];
-  var sessId = req.query['sessId'];
-  var gvToken = req.query['gvToken'];
+app.post('/tickets', function (req, res) {
+  var date = req.body.departureDate;
+  var sessId = req.body.sessId;
+  var gvToken = req.body.gvToken;
+  var fromStation = req.body.fromStation;
+  var toStation = req.body.toStation;
   var headers = {
     'Accept': '*/*',
     'Accept-Encoding': 'gzip, deflate',
@@ -45,32 +49,26 @@ app.get('/tickets', function (req, res) {
     url: 'http://booking.uz.gov.ua/purchase/search/',
     method: 'POST',
     headers: headers,
-    form: { station_id_from:2200001,
-      station_id_till:2200184,
+    form: { station_id_from:fromStation,
+      station_id_till:toStation,
       date_dep: date,
       time_dep:"00:00",
       time_dep_till:"",
-      station_from:'Київ',
-      station_till:'Кривин',
+      //station_from:'Київ',
+      //station_till:'Кривин',
       another_ec:0,
       search:"" }
   }
 
   // Start the request
   request(options, function (error, response, body) {
-    //console.log(error);
-    //console.log(response.request.body);
-    //console.log(body);
     if (!error && response.statusCode == 200) {
-      // Print out the response body
-      
       res.send(body);
     } else {
-      console.log(response);
-      return response;
+      res.statusCode = 500;
+      res.send(error || 'some error');
     }
   })
-  //res.send('Hello World!')
 })
 
 app.listen(3000, function () {

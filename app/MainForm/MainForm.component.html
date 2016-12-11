@@ -3,7 +3,7 @@
         <div class="ten wide column">
             <form class="ui form" 
             [formGroup]="mainForm"
-            (ngSubmit)="onSubmit(mainForm.value)">
+            (ngSubmit)="submitClick(mainForm.value)">
                 <div class="two fields">
                     <div class="field">
                         <select clas="ui fluid dropdown" name="from" [formControl]="mainForm.controls['from']">

@@ -3,6 +3,7 @@ import {
     FormBuilder,
     FormGroup
 } from '@angular/forms';
+import {Observable} from 'rxjs';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { RequestParameters } from './../Models/RequestParameters';
@@ -47,10 +48,23 @@ export class MainFromComponent implements OnInit {
         });
     }
 
-    onSubmit(values: any) {
+    submitClick(values: any) {
+
         var params = new RequestParameters(values);
-        this.router.navigate(['/search'], { queryParams: params })
-        this.submitCall.next(params);
+        this.router.navigate(['/search'], { queryParams: params });
+        this.onSubmit(params);
+        Observable.timer(0, 1000).subscribe((value)=> {
+            console.log(value);
+            if(value % 10 == 0) {
+                this.onSubmit(params);
+            }
+        });
         return false;
     }
+
+    onSubmit(params: RequestParameters) {
+        this.submitCall.next(params);
+    }
+
+    
 }

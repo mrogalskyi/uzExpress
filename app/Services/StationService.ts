@@ -10,6 +10,7 @@ export class StationService {
     getStations() {
         this.stations.next([
                 {id:2200001, title:'Київ'},
+                {id:2218200, title:'Івано-Франківськ'},
                 {id:2200184, title:'Кривин'}
             ])
         return this.stations;
