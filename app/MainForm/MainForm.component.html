@@ -2,8 +2,7 @@
     <div class="centered row">
         <div class="ten wide column">
             <form class="ui form" 
-            [formGroup]="mainForm"
-            (ngSubmit)="submitClick(mainForm.value)">
+            [formGroup]="mainForm">
                 <div class="two fields">
                     <div class="field">
                         <select clas="ui fluid dropdown" name="from" [formControl]="mainForm.controls['from']">
@@ -32,7 +31,9 @@
                         <input type="text" name="GV-Token" placeholder="GV-Token" [formControl]="mainForm.controls['gvToken']">
                     </div>
                 </div>
-                <button class="ui button" type="submit">Search</button>
+                <button *ngIf="!searching" class="ui button" (click)="startClick(mainForm.value)">Start Search</button>
+                <button *ngIf="searching" class="ui button" (click)="forceClick(mainForm.value)">Force Search</button>
+                <button *ngIf="searching" class="ui button" (click)="stopClick(mainForm.value)">Stop Search</button>
             </form>
         </div>
     </div>

@@ -10,13 +10,15 @@ import { RequestParameters } from "./../Models/RequestParameters";
 import { StationService } from "../Services/StationService";
 import { Station } from "../Models/Station";
 
-
 @Component({
-    selector: "main-form",
+    selector: "uz-main-form",
     template: require("./MainForm.component.html")
 })
 export class MainFromComponent implements OnInit {
-    @Output() submitCall = new EventEmitter<RequestParameters>();
+    @Output() startSearch = new EventEmitter<RequestParameters>();
+    @Output() stopSearch = new EventEmitter<RequestParameters>();
+    @Output() forceSearch = new EventEmitter<RequestParameters>();
+    searching: boolean;
     mainForm: FormGroup;
     stations: Station[];
 
@@ -48,21 +50,20 @@ export class MainFromComponent implements OnInit {
         });
     }
 
-    submitClick(values: any) {
-
+    startClick(values: any) {
+        this.searching = true;
         let params = new RequestParameters(values);
         this.router.navigate(["/search"], { queryParams: params });
-        this.onSubmit(params);
-        Observable.timer(0, 1000).subscribe((value) => {
-            console.log(value);
-            if (value % 10 === 0) {
-                this.onSubmit(params);
-            }
-        });
+        this.startSearch.next(params);
         return false;
     }
-
-    onSubmit(params: RequestParameters) {
-        this.submitCall.next(params);
+    forceClick(values: any) {
+        this.forceSearch.next();
+        return false;
+    }
+    stopClick(values: any) {
+        this.searching = false;
+        this.stopSearch.next();
+        return false;
     }
 }
