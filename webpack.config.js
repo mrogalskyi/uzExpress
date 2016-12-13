@@ -1,5 +1,6 @@
 var webpack = require("webpack");
 var HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
@@ -44,7 +45,10 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             template: "./app/index.html"
-        })
+        }),
+        new CopyWebpackPlugin([
+        { from: "app/assets", to: "assets" }
+      ]),
     ]
 
 };

@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { RequestParameters } from "../Models/RequestParameters";
 import { TicketsService } from "../Services/TicketsService";
-import { Observable, Subject } from "rxjs";
+import { Observable, Subject, Subscription } from "rxjs";
 import { Train } from "../Models/Train";
 @Component({
   selector: "uz-search",
@@ -15,17 +15,25 @@ import { Train } from "../Models/Train";
 export class SearchComponent {
   trains: any[];
   error: string;
-  search: Observable<Train[]>;
-  stop: Subject<boolean> = new Subject<boolean>();
+  search: Subscription;
   constructor(public ticketsService: TicketsService) {
   }
   searchStart(params: RequestParameters): void {
     this.error = "";
     this.trains = [];
-    this.search = this.ticketsService.getTrainsWithTicketsStream(params).takeUntil(this.stop);
-    this.search.subscribe((trains) => this.trains = trains, (err) => this.error = err);
+    this.searchStop();
+    this.search = this.ticketsService.getTrainsWithTicketsStream(params).
+                  subscribe((trains) => {
+                    this.error = "";
+                    this.trains = trains;
+                    let v = new Audio("/assets/1.mp3");
+                    v.play();
+                  }, (err) => {
+                    this.trains = [];
+                    this.error = err;
+                  });
   }
    searchStop(): void {
-     this.stop.next(true);
+     this.search && this.search.unsubscribe();
   }
 }
