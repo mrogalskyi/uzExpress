@@ -9,7 +9,7 @@ import { Train } from "../Models/Train";
     <h1>Tickets helper</h1>
     <uz-main-form (startSearch)="searchStart($event)" (stopSearch)="searchStop()" (forceSearch)="searchForce()"></uz-main-form>
     {{error}}
-    <train-list [trains]="trains"></train-list>
+    <uz-train-list [trains]="trains"></uz-train-list>
     `
 })
 export class SearchComponent {

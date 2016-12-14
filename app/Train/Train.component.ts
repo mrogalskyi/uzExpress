@@ -1,8 +1,8 @@
-import {Component, Input, EventEmitter} from '@angular/core';
-import {Train} from '../Models/Train';
+import { Component, Input, EventEmitter } from "@angular/core";
+import { Train } from "../Models/Train";
 @Component({
-    selector: 'train',
-    template:`
+    selector: "uz-train",
+    template: `
     <div>{{train.Number}}</div>
     <ul>
         <li *ngFor="let car of train.Cars">{{car | json}}</li>
