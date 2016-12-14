@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { RequestParameters } from "../Models/RequestParameters";
 import { Http, Response } from "@angular/http";
 import * as moment from "moment";
@@ -12,19 +12,21 @@ export class TicketsService {
     constructor(private http: Http) {
 
     }
-    getTrainsWithTicketsStream(params: RequestParameters): Observable<Train[]> {
-        let formatedParams = Object.assign({}, params, {departureDate: moment(params.departureDate).format("DD.MM.YYYY")});
+    getTrainsWithTicketsStream(params: RequestParameters, force: Observable<any>): Observable<Train[]> {
+        let formatedParams = Object.assign({}, params, { departureDate: moment(params.departureDate).format("DD.MM.YYYY") });
         let trainStream = IntervalObservable.create(10000)
             .startWith(0)
-            .flatMap(() => this.http.post(`http://localhost:3000/tickets`, formatedParams))
+            .merge(force)
+            .throttleTime(3000)
+            .switchMap(() => this.http.post(`http://localhost:3000/tickets`, formatedParams))
             .map(res => res.json())
             .map((res) => {
-                if (res.value && Array.isArray(res.value)) {
-                    console.log(res.value);
-                    return res.value.map((val) => new Train(val));
+                if (!res.value || !Array.isArray(res.value)) {
+                    throw new Error(res.value || "Server error");
                 }
-                throw new Error(res.value || "Server error");
-            });
+                return res.value;
+            })
+            .map((values) => values.map((val) => new Train(val)));
         return trainStream;
     }
 }
