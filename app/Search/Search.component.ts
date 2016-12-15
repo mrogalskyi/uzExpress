@@ -8,6 +8,7 @@ import { Train } from "../Models/Train";
   template: `
     <h1>Tickets helper</h1>
     <uz-main-form (startSearch)="searchStart($event)" (stopSearch)="searchStop()" (forceSearch)="searchForce()"></uz-main-form>
+    <uz-train-filter></uz-train-filter>
     {{error}}
     <uz-train-list [trains]="trains"></uz-train-list>
     `

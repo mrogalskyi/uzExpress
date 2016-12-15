@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { ReplaySubject } from 'rxjs';
-import {Station} from '../Models/Station';
+import { Injectable } from "@angular/core";
+import { ReplaySubject } from "rxjs";
+import { Station } from "../Models/Station";
 
 @Injectable()
 export class StationService {
@@ -9,10 +9,10 @@ export class StationService {
 
     getStations() {
         this.stations.next([
-                {id:2200001, title:'Київ'},
-                {id:2218200, title:'Івано-Франківськ'},
-                {id:2200184, title:'Кривин'}
-            ])
+                {id: 2200001, title: "Київ"},
+                {id: 2218200, title: "Івано-Франківськ"},
+                {id: 2200184, title: "Кривин"}
+            ]);
         return this.stations;
     }
 }
