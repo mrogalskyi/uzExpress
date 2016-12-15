@@ -5,5 +5,5 @@ import { Train } from "../Models/Train";
     template: `<uz-train *ngFor="let train of trains" [train]="train"></uz-train>`
 })
 export class TrainListComponent {
-    @Input() trains: Train[]
+    @Input() trains: Train[];
 }

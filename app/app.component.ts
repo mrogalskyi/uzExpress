@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-require('./../vendor/semantic.min.css');
+import { Component } from "@angular/core";
+require("./../vendor/semantic.min.css");
 @Component({
-  selector: 'my-app',
+  selector: "uz-my-app",
   template: `
     <router-outlet></router-outlet>
     `

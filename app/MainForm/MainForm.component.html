@@ -5,12 +5,12 @@
             [formGroup]="mainForm">
                 <div class="two fields">
                     <div class="field">
-                        <select clas="ui fluid dropdown" name="from" [formControl]="mainForm.controls['from']">
+                        <select class="ui fluid dropdown" name="from" [formControl]="mainForm.controls['from']">
                             <option *ngFor="let station of stations" value="{{station.id}}">{{station.title}}</option>
                         </select>
                     </div>
                     <div class="field">
-                        <select clas="ui fluid dropdown" name="to" [formControl]="mainForm.controls['to']">
+                        <select class="ui fluid dropdown" name="to" [formControl]="mainForm.controls['to']">
                             <option *ngFor="let station of stations" value="{{station.id}}">{{station.title}}</option>
                         </select>
                     </div>
