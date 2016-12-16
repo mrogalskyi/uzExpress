@@ -37,7 +37,7 @@ export class MainFromComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private stationService: StationService,
-        fb: FormBuilder
+        private fb: FormBuilder
     ) {
         this.stationService.getStations().subscribe( stations => this.stations = stations);
         this.mainForm = fb.group({

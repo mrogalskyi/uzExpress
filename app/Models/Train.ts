@@ -1,6 +1,6 @@
 export class Train {
     Number: string;
-    Cars: Car;
+    Cars: Car[];
     constructor(obj: any) {
         this.Number = obj.num || "";
         if (obj.types) {
@@ -10,7 +10,7 @@ export class Train {
 }
 
 export class Car {
-    Letter: string;
+    Letter: "П"| "С3" | "К" | "Л";
     Places: number;
     constructor(obj: any) {
         this.Letter = obj.letter || "";

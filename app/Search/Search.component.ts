@@ -3,12 +3,14 @@ import { RequestParameters } from "../Models/RequestParameters";
 import { TicketsService } from "../Services/TicketsService";
 import { Observable, Subject, Subscription } from "rxjs";
 import { Train } from "../Models/Train";
+import { TrainFilter } from "../Models/TrainFilter";
+
 @Component({
   selector: "uz-search",
   template: `
     <h1>Tickets helper</h1>
     <uz-main-form (startSearch)="searchStart($event)" (stopSearch)="searchStop()" (forceSearch)="searchForce()"></uz-main-form>
-    <uz-train-filter></uz-train-filter>
+    <uz-train-filter (filterChange)="filterChange($event)"></uz-train-filter>
     {{error}}
     <uz-train-list [trains]="trains"></uz-train-list>
     `
@@ -17,6 +19,7 @@ export class SearchComponent {
   trains: any[];
   error: string;
   search: Subscription;
+  filter: TrainFilter;
   force: EventEmitter<any> = new EventEmitter<any>();
   constructor(public ticketsService: TicketsService) {
   }
@@ -24,7 +27,7 @@ export class SearchComponent {
     this.error = "";
     this.trains = [];
     this.searchStop();
-    this.search = this.ticketsService.getTrainsWithTicketsStream(params, this.force).
+    this.search = this.ticketsService.getTrainsWithTicketsStream(params, this.filter, this.force).
       subscribe((trains) => {
         this.error = "";
         this.trains = trains;
@@ -39,6 +42,9 @@ export class SearchComponent {
   }
   searchForce() {
     this.force.next();
+  }
+  filterChange(filter: TrainFilter) {
+    this.filter = filter;
   }
 
   private playSound(): void {
