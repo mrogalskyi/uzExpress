@@ -25,6 +25,7 @@ app.post('/tickets', function (req, res) {
   var gvToken = req.body.gvToken;
   var fromStation = req.body.fromStation;
   var toStation = req.body.toStation;
+  var departureTime = req.body.departureTime;
   var headers = {
     'Accept': '*/*',
     'Accept-Encoding': 'gzip, deflate',
@@ -52,7 +53,7 @@ app.post('/tickets', function (req, res) {
     form: { station_id_from:fromStation,
       station_id_till:toStation,
       date_dep: date,
-      time_dep:"00:00",
+      time_dep: departureTime || "00:00",
       time_dep_till:"",
       //station_from:'Київ',
       //station_till:'Кривин',

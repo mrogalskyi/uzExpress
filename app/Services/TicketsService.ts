@@ -13,7 +13,7 @@ export class TicketsService {
     constructor(private http: Http) {
 
     }
-    getTrainsWithTicketsStream(params: RequestParameters, filter: TrainFilter, force: Observable<any>): Observable<Train[]> {
+    getTrainsWithTicketsStream(params: RequestParameters, force: Observable<any>): Observable<Train[]> {
         let formatedParams = Object.assign({}, params, { departureDate: moment(params.departureDate).format("DD.MM.YYYY") });
         let trainStream = IntervalObservable.create(10000)
             .startWith(0)
@@ -27,10 +27,7 @@ export class TicketsService {
                 }
                 return res.value;
             })
-            .map((values) => values.map((val) => new Train(val)))
-            .filter((trains) => {
-                return trains.filter((train) => train.Cars.some(car => car.Letter === filter.carLetter)).length;
-            });
+            .map((values) => values.map((val) => new Train(val)));
         return trainStream;
     }
 }

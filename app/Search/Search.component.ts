@@ -12,14 +12,14 @@ import { TrainFilter } from "../Models/TrainFilter";
     <uz-main-form (startSearch)="searchStart($event)" (stopSearch)="searchStop()" (forceSearch)="searchForce()"></uz-main-form>
     <uz-train-filter (filterChange)="filterChange($event)"></uz-train-filter>
     {{error}}
-    <uz-train-list [trains]="trains"></uz-train-list>
+    <uz-train-list [trains]="getFilteredTrains()"></uz-train-list>
     `
 })
 export class SearchComponent {
-  trains: any[];
+  trains: Train[] = [];
   error: string;
   search: Subscription;
-  filter: TrainFilter;
+  filter: TrainFilter = new TrainFilter({});
   force: EventEmitter<any> = new EventEmitter<any>();
   constructor(public ticketsService: TicketsService) {
   }
@@ -27,7 +27,7 @@ export class SearchComponent {
     this.error = "";
     this.trains = [];
     this.searchStop();
-    this.search = this.ticketsService.getTrainsWithTicketsStream(params, this.filter, this.force).
+    this.search = this.ticketsService.getTrainsWithTicketsStream(params, this.force).
       subscribe((trains) => {
         this.error = "";
         this.trains = trains;
@@ -46,9 +46,16 @@ export class SearchComponent {
   filterChange(filter: TrainFilter) {
     this.filter = filter;
   }
+  getFilteredTrains() {
+    return this.trains.filter(train => {
+      return train.Cars.some(car => !this.filter.carLetter || car.Letter === this.filter.carLetter);
+    });
+  }
 
   private playSound(): void {
-    let v = new Audio("/assets/1.mp3");
-    v.play();
+    if (this.getFilteredTrains().length) {
+      let v = new Audio("/assets/1.mp3");
+      v.play();
+    }
   }
 }

@@ -1,6 +1,6 @@
 import { Component, Output, OnInit, EventEmitter } from "@angular/core";
 import { FormBuilder, FormGroup, AbstractControl } from "@angular/forms";
-import { TrainFilter } from "../models/TrainFilter";
+import { TrainFilter } from "../Models/TrainFilter";
 
 @Component({
     selector: "uz-train-filter",
