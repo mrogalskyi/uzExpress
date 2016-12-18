@@ -48,7 +48,7 @@ export class SearchComponent {
   }
   getFilteredTrains() {
     return this.trains.filter(train => {
-      return train.Cars.some(car => !this.filter.carLetter || car.Letter === this.filter.carLetter);
+      return train.cars.some(car => !this.filter.carLetter || car.letter === this.filter.carLetter);
     });
   }
 
