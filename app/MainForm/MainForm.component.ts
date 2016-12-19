@@ -21,16 +21,32 @@ export class MainFromComponent implements OnInit {
     searching: boolean;
     mainForm: FormGroup;
     stations: Station[];
+    private paramsMap: { [id: string]: string } = {
+        "fromStation": "from",
+        "toStation": "to",
+        "departureDate": "when",
+        "departureTime": "time",
+        "sessId": "sessid",
+        "gvToken": "gvToken"
+    };
 
     ngOnInit() {
         this.route.queryParams.subscribe((params: Params) => {
-            this.mainForm.controls["from"].setValue(params["fromStation"] || "");
-            this.mainForm.controls["to"].setValue(params["toStation"] || "");
-            this.mainForm.controls["when"].setValue(params["departureDate"] || "");
-            this.mainForm.controls["time"].setValue(params["departureTime"] || "");
-            this.mainForm.controls["sessid"].setValue(params["sessId"] || "");
-            this.mainForm.controls["gvToken"].setValue(params["gvToken"] || "");
+            for (let key in this.paramsMap) {
+                let value = this.paramsMap[key];
+                if ((params[key] || "") !== this.mainForm.controls[value].value) {
+                    this.mainForm.controls[value].setValue(params[key] || "");
+                };
+            }
         });
+        this.mainForm.valueChanges
+            .debounceTime(500)
+            .distinctUntilChanged()
+            .subscribe((values: any) => {
+                if (this.searching) {
+                    this.startClick(values);
+                }
+            });
     }
 
     constructor(
@@ -39,7 +55,7 @@ export class MainFromComponent implements OnInit {
         private stationService: StationService,
         private fb: FormBuilder
     ) {
-        this.stationService.getStations().subscribe( stations => this.stations = stations);
+        this.stationService.getStations().subscribe(stations => this.stations = stations);
         this.mainForm = fb.group({
             from: [""],
             to: [""],
