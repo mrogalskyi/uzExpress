@@ -15,7 +15,8 @@ export class TicketsService {
     }
     getTrainsWithTicketsStream(params: RequestParameters, force: Observable<any>): Observable<Train[]> {
         let formatedParams = Object.assign({}, params, { departureDate: moment(params.departureDate).format("DD.MM.YYYY") });
-        let trainStream = IntervalObservable.create(10000)
+        let trainStream = IntervalObservable.create(20000)
+            .delayWhen((v) => Observable.timer(10000 * Math.random()))
             .startWith(0)
             .merge(force)
             .throttleTime(3000)
